@@ -1,0 +1,50 @@
+:root {
+    --primary: #00f2ea;
+    --secondary: #ff0050;
+    --dark: #121212;
+}
+
+body {
+    background: linear-gradient(45deg, #121212, #1a1a1a);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.input-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    margin-bottom: 20px;
+}
+
+.download-btn {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border: none;
+    padding: 15px 30px;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    transform: scale(1.05);
+}
