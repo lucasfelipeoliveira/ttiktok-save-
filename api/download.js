@@ -1,23 +1,27 @@
 export default async function handler(req, res) {
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido' });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Apenas POST é permitido' });
+  }
 
-    const { url } = req.body;
-    const API_KEY = process.env.API_KEY; // A Vercel vai ler a chave que você configurou
+  const { url } = req.body;
 
-    try {
-        const response = await fetch('https://tiktok-video-no-watermark2.p.rapidapi.com/', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'x-rapidapi-key': API_KEY,
-                'x-rapidapi-host': 'tiktok-video-no-watermark2.p.rapidapi.com'
-            },
-            body: new URLSearchParams({ url, hd: '1' })
-        });
+  try {
+    // Chamada para uma API que processa TikTok (exemplo TikWM)
+    const apiResponse = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+    const data = await apiResponse.json();
 
-        const data = await response.json();
-        res.status(200).json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Erro ao processar o vídeo' });
+    if (data.data) {
+      // Retorna os dados no formato que o seu script.js espera
+      return res.status(200).json({
+        data: {
+          play: data.data.play, // Link do vídeo sem marca d'água
+          title: data.data.title
+        }
+      });
+    } else {
+      return res.status(400).json({ msg: "Vídeo não encontrado ou privado." });
     }
+  } catch (error) {
+    return res.status(500).json({ msg: "Erro no servidor da API." });
+  }
 }
